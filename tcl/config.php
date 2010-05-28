@@ -1,5 +1,5 @@
 <?php
-$root = '/home/xbmc/gitmisc/tcl';
+$root = dirname( __FILE__ );
 
 // Set the include path to the eZ Components location, and bootstrap the
 // library. The two lines below assume that you're using eZ Components from
