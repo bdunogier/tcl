@@ -70,7 +70,7 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 
 	function runRequestFilters( ezcMvcRoutingInformation $routeInfo, ezcMvcRequest $request )
 	{
-	    echo "<pre>"; print_r( $routeInfo );; echo "</pre>";
+	    // echo "<pre>"; print_r( $routeInfo );; echo "</pre>";
 	}
 
 	function runResponseFilters( ezcMvcRoutingInformation $routeInfo, ezcMvcRequest $request, ezcMvcResult $result, ezcMvcResponse $response )
