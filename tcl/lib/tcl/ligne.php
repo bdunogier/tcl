@@ -1,5 +1,5 @@
 <?php
-class tclLigne
+class tclLigne// implements IteratorAggregate
 {
     /**
      * Constructs a tclLigne object based on the string found in the website's combo box
