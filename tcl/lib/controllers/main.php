@@ -8,12 +8,11 @@ class tclController extends ezcMvcController
 	    /* temporary junk */
 		try {
 			$scraperHoraires = new tclScraperHoraires( $this->ligne, $this->arret, $this->direction );
-
+			$res->variables = $scraperHoraires->get();
 		} catch( Exception $e) {
 			print_r( $e );
 			die();
 		}
-
 
         return $res;
 	}

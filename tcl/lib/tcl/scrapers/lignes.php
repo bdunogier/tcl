@@ -3,12 +3,7 @@ class tclScraperLignes extends tclScraper
 {
     public function get()
     {
-        $url = $this->baseURL;
-
-        $doc = new DOMDocument();
-        $doc->strictErrorChecking = FALSE;
-        $doc->loadHTML( $this->fetch() );
-        $doc = simplexml_import_dom( $doc );
+        $doc = $this->fetch();
 
         $ret = array();
         list( $xp ) = $doc->xpath( '//select[@id=\'hor_lignes\']' );

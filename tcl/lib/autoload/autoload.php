@@ -22,5 +22,6 @@ return array(
 	'tclScraper'             => 'tcl/interfaces/scraper.php', // interface
 	'tclScraperLignes'       => 'tcl/scrapers/lignes.php',
 	'tclScraperDetailsLigne' => 'tcl/scrapers/details_ligne.php',
+	'tclScraperHoraires'     => 'tcl/scrapers/horaires.php',
 );
 ?>

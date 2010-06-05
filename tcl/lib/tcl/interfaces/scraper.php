@@ -5,10 +5,10 @@ abstract class tclScraper
 	protected $baseURL = 'http://tcl.fr/index.asp';
 
 	/**
-	 * Builds the fetch URL, and returns the resulting HTML
+	 * Builds the fetch URL, and returns the resulting as a SimpleXML Object
 	 *
 	 * @param string $url
-	 * @return string
+	 * @return SimpleXMLElement
 	 */
 	protected function fetch()
 	{
@@ -32,8 +32,12 @@ abstract class tclScraper
 			$string = file_get_contents( $url );
 			$cache->store( $cacheId, $string );
 		}
+		$doc = new DOMDocument();
+		$doc->strictErrorChecking = FALSE;
+		@$doc->loadHTML( $string );
+		$doc = simplexml_import_dom( $doc );
 
-		return $string;
+		return $doc;
 	}
 }
 ?>

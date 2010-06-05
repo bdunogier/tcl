@@ -14,29 +14,28 @@ class tclScraperHoraires extends tclScraper
 
 		// use tclScraperLignes to get the line string
 		// very bad, this needs some server side storage :)
-		$scrapper = new tclScraperLignes();
-		$lines = $scrapper->get();
-		if ( !isset( $lines[$idLigne] ) )
-			throw new Exception( "Unknown line '$idLigne'" );
+    	try {
+    		$scrapper = new tclScraperDetailsLigne( $idLigne );
+    		$line = $scrapper->get();
+    	} catch( Exception $e ) {
+    		die( $e->getMessage() );
+    	}
 
-		$this->params['Line'] = $lines[$idLigne]->string;
+		$this->params['Line'] = $line->string;
+		$this->params['Direction'] = $line->directions[$direction]['code'];
+		$this->params['StopArea'] = $line->arrets[$idArret]->string;
+    	// echo "<pre><b>".__METHOD__.", \$this->params</b>\n"; print_r( $this->params ); echo "</pre>";
     }
 
 	public function get()
     {
-        $url = $this->baseURL;
+		$doc = $this->fetch();
 
-        $doc = new DOMDocument();
-        $doc->strictErrorChecking = FALSE;
-        $doc->loadHTML( $this->fetch() );
-        $doc = simplexml_import_dom( $doc );
-
-        $ret = array();
-        list( $xp ) = $doc->xpath( '//select[@id=\'hor_lignes\']' );
-        foreach( $xp->optgroup->option as $option )
+        // <a title="Consulter les horaires à partir de
+		$xp = $doc->xpath( "//a[starts-with(@title, 'Consulter')]" );
+		foreach( $xp as $linkHoraire )
         {
-            $line = tclLigne::fromComboBoxString( (string)$option['value'] );
-            $ret[$line->id] = $line;
+			$ret[] = explode( 'h', substr( (string)$linkHoraire['title'], -5 ) );
         }
 
         return $ret;

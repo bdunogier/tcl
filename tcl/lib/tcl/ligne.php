@@ -37,5 +37,17 @@ class tclLigne
 	 * @var string
 	 */
 	public $string;
+
+	/**
+	 * Array of tclArret
+	 * @var array( tclArret )
+	 */
+	public $arrets = array();
+
+	/**
+	 * Directions
+	 * @var array
+	 */
+	public $directions;
 }
 ?>

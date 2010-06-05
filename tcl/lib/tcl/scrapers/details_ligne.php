@@ -7,6 +7,8 @@ class tclScraperDetailsLigne extends tclScraper
      */
 	public function __construct( $idLigne )
     {
+		$this->idLigne = $idLigne;
+
 		$this->params['page'] = 'horaires';
 		$this->params['etape'] = 2;
 		$this->params['Date'] = implode( '|', array( date('Y'), date('m'), date('d') ) );
@@ -19,17 +21,14 @@ class tclScraperDetailsLigne extends tclScraper
 		if ( !isset( $lines[$idLigne] ) )
 			throw new Exception( "Unknown line '$idLigne'" );
 
-		$this->params['Line'] = $lines[$idLigne]->string;
+		$this->ligne = $lines[$idLigne];
+
+		$this->params['Line'] = $this->ligne->string;
 	}
 
 	public function get()
     {
-        $url = $this->baseURL;
-
-        $doc = new DOMDocument( '1.0', 'utf-8' );
-        $doc->strictErrorChecking = FALSE;
-        $doc->loadHTML( $this->fetch() );
-        $doc = simplexml_import_dom( $doc );
+        $doc = $this->fetch();
 
         $ret = array( 'arrets' => array(), 'directions' => array() );
 
@@ -42,7 +41,7 @@ class tclScraperDetailsLigne extends tclScraper
 				if ( $value !== "" )
 				{
 					$stop = tclArret::fromComboBoxString( $value );
-					$ret['arrets'][$stop->id] = $stop;
+					$this->ligne->arrets[$stop->id] = $stop;
 				}
 			}
 		} catch( Exception $e ) {
@@ -51,12 +50,12 @@ class tclScraperDetailsLigne extends tclScraper
 		}
 
 		// direction 1
-		$ret['directions'] = array(
+		$this->ligne->directions = array(
 			'fw' => $this->getDirection( '//label[@for=\'sensForw\']', $doc ),
 			'bw' => $ret['directions']['bw'] = $this->getDirection( '//label[@for=\'sensBack\']', $doc ),
 		);
 
-        return $ret;
+        return $this->ligne;
     }
 
 	protected function getDirection( $xpathExpression, SimpleXMLElement $xml )
@@ -71,5 +70,10 @@ class tclScraperDetailsLigne extends tclScraper
 			'code' => (string)$xp->input['value']
 		);
 	}
+
+	/**
+	 * @var tclLigne
+	 */
+	protected $ligne;
 }
 ?>
