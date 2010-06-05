@@ -18,9 +18,9 @@ return array(
 	'tclLigne'            => 'tcl/ligne.php',
 	'tclArret'             => 'tcl/arret.php',
 
-	// scrappers
-	'tclScrapper'             => 'tcl/interfaces/scrapper.php', // interface
-	'tclScrapperLignes'       => 'tcl/scrappers/lignes.php',
-	'tclScrapperDetailsLigne' => 'tcl/scrappers/details_ligne.php',
+	// scrapers
+	'tclScraper'             => 'tcl/interfaces/scraper.php', // interface
+	'tclScraperLignes'       => 'tcl/scrapers/lignes.php',
+	'tclScraperDetailsLigne' => 'tcl/scrapers/details_ligne.php',
 );
 ?>

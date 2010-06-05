@@ -55,7 +55,7 @@ class tclController extends ezcMvcController
     {
     	$result = new ezcMvcResult();
 
-    	$scrapperLigne = new tclScrapperDetailsLigne( $this->ligne );
+    	$scrapperLigne = new tclScraperDetailsLigne( $this->ligne );
     	$result->variables = $scrapperLigne->get();
 
     	return $result;
@@ -69,7 +69,7 @@ class tclController extends ezcMvcController
     {
         $result = new ezcMvcResult;
 
-        $scrapperLignes = new tclScrapperLignes();
+        $scrapperLignes = new tclScraperLignes();
         $result->variables = $scrapperLignes->get();
 
         return $result;
