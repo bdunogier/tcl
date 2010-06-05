@@ -17,9 +17,9 @@ class tclArret// implements IteratorAggregate
             throw new ezcBaseValueException( 'stopData', $stopData, "4 elements array", 'parameter' );
 
         $stop = new self;
+    	$stop->string = $strLigne;
         list( $stop->id, $stop->internalId, $stop->label, $stop->quartier )
             = $stopData;
-
         return $stop;
     }
 
@@ -39,5 +39,6 @@ class tclArret// implements IteratorAggregate
     public $label;
     public $internalId;
     public $quartier;
+	public $string;
 }
 ?>
