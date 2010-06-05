@@ -1,5 +1,5 @@
 <?php
-class tclLigne// implements IteratorAggregate
+class tclLigne
 {
     /**
      * Constructs a tclLigne object based on the string found in the website's combo box
@@ -17,18 +17,25 @@ class tclLigne// implements IteratorAggregate
             throw new ezcBaseValueException( 'lineData', $lineData, "8 elements array", 'parameter' );
 
         $line = new self;
-        list( $line->id, $line->label, $line->misc1, $line->internalId,
+    	$line->string = $strLigne;
+        list( $line->id, $line->label, $null, $line->internalId,
             $line->direction1, $line->direction2,
-            $line->misc2, $line->type ) = $lineData;
-
+            $null, $line->type, ) = $lineData;
+		$line->link = "/lignes/{$line->id}";
         return $line;
     }
 
     public $id;
     public $label;
-    protected $misc1, $misc2;
     public $internalId;
     public $direction1, $direction2;
     public $type;
+	public $link;
+
+	/**
+	 * The pipe separated string used to identify a line during requests
+	 * @var string
+	 */
+	public $string;
 }
 ?>

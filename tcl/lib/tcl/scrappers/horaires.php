@@ -1,5 +1,5 @@
 <?php
-class tclScrapperLignes extends tclScrapper
+class tclScrapperHoraires extends tclScrapper
 {
     public function get()
     {

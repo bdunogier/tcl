@@ -51,7 +51,15 @@ class tclController extends ezcMvcController
      * Returns informations about a line
      * @return ezcMvcResult
      */
-    public function doInfosLigne() {}
+    public function doInfosLigne()
+    {
+    	$result = new ezcMvcResult();
+
+    	$scrapperLigne = new tclScrapperDetailsLigne( $this->ligne );
+    	$result->variables = $scrapperLigne->get();
+
+    	return $result;
+	}
 
     /**
      * Returns the lines list, with links to further details about each
@@ -61,8 +69,8 @@ class tclController extends ezcMvcController
     {
         $result = new ezcMvcResult;
 
-        $parserLignes = new tclLignes();
-        $result->variables['lignes'] = $parserLignes->get();
+        $scrapperLignes = new tclScrapperLignes();
+        $result->variables = $scrapperLignes->get();
 
         return $result;
     }

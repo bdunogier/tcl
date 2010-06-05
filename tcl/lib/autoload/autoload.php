@@ -16,7 +16,11 @@ return array(
 	// TCL related
 	'tclHoraires'         => 'tcl/horaires.php',
 	'tclLigne'            => 'tcl/ligne.php',
+	'tclArret'             => 'tcl/arret.php',
 
-	'tclScrapperLignes' => 'tcl/scrappers/lignes.php',
+	// scrappers
+	'tclScrapper'             => 'tcl/interfaces/scrapper.php', // interface
+	'tclScrapperLignes'       => 'tcl/scrappers/lignes.php',
+	'tclScrapperDetailsLigne' => 'tcl/scrappers/details_ligne.php',
 );
 ?>
