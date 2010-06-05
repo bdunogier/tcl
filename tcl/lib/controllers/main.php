@@ -14,7 +14,23 @@ class tclController extends ezcMvcController
 			die();
 		}
 
-        return $res;
+		if ( isset( $this->aPartirDe ) )
+		{
+			$horaires = $res->variables;
+			$res->variables = array();
+			$from = explode( 'h', $this->aPartirDe );
+			foreach( $horaires as $horaire )
+			{
+				if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
+				{
+					$res->variables[] = $horaire;
+				}
+				if ( count( $res->variables ) == 3 )
+					break;
+			}
+		}
+
+		return $res;
 	}
 
 	public function doDefault()

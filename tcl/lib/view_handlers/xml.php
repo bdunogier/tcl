@@ -25,11 +25,26 @@ class tclMvcXmlViewHandler extends ezcMvcJsonViewHandler
 		if ( $value === null )
 			return;
 		elseif ( !is_array( $value ) and !is_object( $value ) )
-			$xml->addChild( $name, $value );
+		{
+			$label = is_numeric( $name ) ? 'item' : $name;
+			$xml->addChild( $label, $value );
+		}
 		else
 		{
 			// the node name for an array is the key, while it is the class name for an object
-			$child = $xml->addChild( is_object( $value ) ? get_class( $value ) : $name );
+			if ( is_object( $value ) )
+			{
+				$label = get_class( $value );
+			}
+			elseif( is_numeric( $name ) )
+			{
+				$label = 'item';
+			}
+			else
+			{
+				$label = $name;
+			}
+			$child = $xml->addChild( $label );
 
 			// array_walk( $value, array( $this, 'addChildren' ), $child );
 			foreach( $value as $subName => $subValue )
