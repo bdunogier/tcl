@@ -8,5 +8,7 @@ return array(
 
 	// TCL related
 	'tclHoraires'         => 'tcl/horaires.php',
+    'tclLignes'           => 'tcl/lignes.php',
+    'tclLigne'            => 'tcl/ligne.php',
 );
 ?>

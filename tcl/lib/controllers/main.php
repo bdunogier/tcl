@@ -34,14 +34,40 @@ class tclController extends ezcMvcController
         return $res;
 	}
 
-	public function doRoot()
+	public function doDefault()
 	{
 		$res = new ezcMvcResult;
 		$res->variables['test'] = 'test';
 		return $res;
 	}
 
-	public function doFatal()
+    /**
+     * Returns stops for a line
+     * @return ezcMvcResult
+     */
+    public function doArrets() {}
+
+    /**
+     * Returns informations about a line
+     * @return ezcMvcResult
+     */
+    public function doInfosLigne() {}
+
+    /**
+     * Returns the lines list, with links to further details about each
+     * @return ezcMvcResult
+     */
+    public function doLignes()
+    {
+        $result = new ezcMvcResult;
+
+        $parserLignes = new tclLignes();
+        $result->variables['lignes'] = $parserLignes->get();
+
+        return $result;
+    }
+
+    public function doFatal()
 	{
 		return new ezcMvcResult;
 	}

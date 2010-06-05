@@ -25,9 +25,12 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 	function createView( ezcMvcRoutingInformation $routeInfo,
 		ezcMvcRequest $request, ezcMvcResult $result )
 	{
-		switch ( $routeInfo->matchedRoute )
+		// this should depend on the request type (JSON, HTML, XML)
+        switch ( $routeInfo->matchedRoute )
 		{
-			case '/horaire':
+			case '/horaires':
+			case '/lignes':
+			case '/ligne':
 			case '/FATAL':
 			case '/':
 				return new tclHttpView( $request, $result );
