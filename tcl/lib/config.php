@@ -6,10 +6,10 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 	 */
 	function createRequestParser()
 	{
-		$requestParser = new ezcMvcHttpRequestParser;
-		$requestParser->prefix = '/index.php';
-		return $requestParser;
-	}
+	    $parser = new ezcMvcHttpRequestParser;
+	    $parser->prefix = preg_replace( '@/index\.php$@', '', $_SERVER['SCRIPT_NAME'] );
+	    return $parser;
+    }
 
 	/**
 	 * @return ezcMvcRouter
@@ -77,7 +77,6 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 
 	function runResultFilters( ezcMvcRoutingInformation $routeInfo, ezcMvcRequest $request, ezcMvcResult $result )
 	{
-		$result->variables['installRoot'] = preg_replace( '@/index\.php$@', '', $_SERVER['SCRIPT_NAME'] );
 	}
 
 	/**

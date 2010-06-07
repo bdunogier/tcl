@@ -8,7 +8,7 @@ class tclController extends ezcMvcController
 	    /* temporary junk */
 		try {
 			$scraperHoraires = new tclScraperHoraires( $this->ligne, $this->arret, $this->direction );
-			$res->variables = $scraperHoraires->get();
+			$horaires = $scraperHoraires->get();
 		} catch( Exception $e) {
 			print_r( $e );
 			die();
@@ -16,16 +16,15 @@ class tclController extends ezcMvcController
 
 		if ( isset( $this->aPartirDe ) )
 		{
-			$horaires = $res->variables;
-			$res->variables = array();
+			$res->variables['horaires'] = array();
 			$from = explode( 'h', $this->aPartirDe );
 			foreach( $horaires as $horaire )
 			{
 				if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
 				{
-					$res->variables[] = $horaire;
+					$res->variables['horaires'][] = $horaire;
 				}
-				if ( count( $res->variables ) == 3 )
+				if ( count( $res->variables['horaires'] ) == 3 )
 					break;
 			}
 		}
@@ -55,7 +54,7 @@ class tclController extends ezcMvcController
     	$result = new ezcMvcResult();
 
     	$scrapperLigne = new tclScraperDetailsLigne( $this->ligne );
-    	$result->variables = $scrapperLigne->get();
+    	$result->variables['ligne'] = $scrapperLigne->get();
 
     	return $result;
 	}
