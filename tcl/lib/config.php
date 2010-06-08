@@ -20,7 +20,7 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 	}
 
 	/**
-	 * Figures out which view hansdler should be used.
+	 * Figures out which view handler should be used.
 	 *
 	 * Will use the Accept-Type header to do so, unless a specific Content-Type
 	 * has been found out in the URI by {@link runPreRoutingFilters()}
