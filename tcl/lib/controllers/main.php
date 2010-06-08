@@ -82,6 +82,7 @@ class tclController extends ezcMvcController
 	{
         $result = new ezcMvcResult;
         $result->variables['result'] = 'error';
+        $result->variables['exception'] = $this->request->variables['exception'];
         return $result;
 	}
 }
