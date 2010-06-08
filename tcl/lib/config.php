@@ -70,7 +70,7 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 		Exception $response )
 	{
 		$req = clone $request;
-		$req->uri = '/FATAL';
+		$req->uri = '/fatal';
 
 		return $req;
 	}

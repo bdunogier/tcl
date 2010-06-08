@@ -7,6 +7,9 @@ class tclMvcRouter extends ezcMvcRouter
 		    // next 3 departures after a given time
 			new ezcMvcRailsRoute( '/horaires/:ligne/:arret/:direction/:aPartirDe', 'tclController', 'horaires' ),
 
+            // next 3 departures after the current time
+            new ezcMvcRailsRoute( '/horaires/:ligne/:arret/:direction', 'tclController', 'horaires' ),
+
 			// all departures for today
 			new ezcMvcRailsRoute( '/horaires/:ligne/:arret/:direction', 'tclController', 'horaires' ),
 
