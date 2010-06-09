@@ -24,8 +24,6 @@ class tclController extends ezcMvcController
                 break;
         }
 
-        $res->variables['result'] = "ok";
-
         return $res;
     }
 
@@ -51,7 +49,6 @@ class tclController extends ezcMvcController
         $result = new ezcMvcResult();
 
         $scrapperLigne = new tclScraperDetailsLigne( $this->ligne );
-        $result->variables['result'] = "ok";
         $result->variables['ligne'] = $scrapperLigne->get();
 
         return $result;
@@ -67,7 +64,6 @@ class tclController extends ezcMvcController
 
         $scrapperLignes = new tclScraperLignes();
         $result->variables['lignes'] = $scrapperLignes->get();
-        $result->variables['result'] = "ok";
 
         return $result;
     }
@@ -75,7 +71,6 @@ class tclController extends ezcMvcController
     public function doFatal()
     {
         $result = new ezcMvcResult;
-        $result->variables['result'] = 'error';
         $result->variables['exception'] = $this->request->variables['exception'];
         return $result;
     }
