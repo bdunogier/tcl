@@ -6,7 +6,8 @@ return array(
 	'tclController'       => 'controllers/main.php',
 
     // MVC: Result status
-    'tclMvcResultStatusNotFound' => 'result_status/notfound.php',
+    'tclMvcResultStatusError'    => 'result_status/error.php',
+    'tclMvcResultStatusNotFound' => 'result_status/error_not_found.php',
 
 	// MVC: Views
 	'tclJsonView' => 'views/json.php',
