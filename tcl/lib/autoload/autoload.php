@@ -23,5 +23,10 @@ return array(
 	'tclScraperLignes'       => 'tcl/scrapers/lignes.php',
 	'tclScraperDetailsLigne' => 'tcl/scrapers/details_ligne.php',
 	'tclScraperHoraires'     => 'tcl/scrapers/horaires.php',
+
+	// exceptions
+	'tclScraperNetworkException' => 'tcl/exceptions/scraper_network.php',
+	'tclScraperHTTPException'    => 'tcl/exceptions/scraper_http.php',
+	'tclScraperHTMLException'    => 'tcl/exceptions/scraper_html.php',
 );
 ?>
