@@ -1,22 +1,16 @@
 <?php
 class tclController extends ezcMvcController
 {
-	public function doHoraires()
-	{
-		$res = new ezcMvcResult;
+    public function doHoraires()
+    {
+        $res = new ezcMvcResult;
 
-	    /* temporary junk */
-		try {
-			$scraperHoraires = new tclScraperHoraires( $this->ligne, $this->arret, $this->direction );
-			$horaires = $scraperHoraires->get();
-		} catch( Exception $e) {
-			print_r( $e );
-			die();
-		}
+        $scraperHoraires = new tclScraperHoraires( $this->ligne, $this->arret, $this->direction );
+        $horaires = $scraperHoraires->get();
 
-		// current time of not specified
+        // current time of not specified
         if ( !isset( $this->aPartirDe ) )
-		    $this->aPartirDe = date( 'H' ) . 'h' . date( 'i' );
+            $this->aPartirDe = date( 'H' ) . 'h' . date( 'i' );
 
         $res->variables['horaires'] = array();
         $from = explode( 'h', $this->aPartirDe );
@@ -24,23 +18,23 @@ class tclController extends ezcMvcController
         {
             if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
             {
-            	$res->variables['horaires'][] = $horaire;
+                $res->variables['horaires'][] = $horaire;
             }
             if ( count( $res->variables['horaires'] ) == 3 )
-            	break;
+                break;
         }
 
-		$res->variables['result'] = "ok";
+        $res->variables['result'] = "ok";
 
         return $res;
-	}
+    }
 
-	public function doDefault()
-	{
-		$res = new ezcMvcResult;
-		$res->variables['test'] = 'test';
-		return $res;
-	}
+    public function doDefault()
+    {
+        $res = new ezcMvcResult;
+        $res->variables['test'] = 'test';
+        return $res;
+    }
 
     /**
      * Returns stops for a line
@@ -54,14 +48,14 @@ class tclController extends ezcMvcController
      */
     public function doInfosLigne()
     {
-    	$result = new ezcMvcResult();
+        $result = new ezcMvcResult();
 
-    	$scrapperLigne = new tclScraperDetailsLigne( $this->ligne );
-    	$result->variables['result'] = "ok";
-    	$result->variables['ligne'] = $scrapperLigne->get();
+        $scrapperLigne = new tclScraperDetailsLigne( $this->ligne );
+        $result->variables['result'] = "ok";
+        $result->variables['ligne'] = $scrapperLigne->get();
 
-    	return $result;
-	}
+        return $result;
+    }
 
     /**
      * Returns the lines list, with links to further details about each
@@ -79,11 +73,11 @@ class tclController extends ezcMvcController
     }
 
     public function doFatal()
-	{
+    {
         $result = new ezcMvcResult;
         $result->variables['result'] = 'error';
         $result->variables['exception'] = $this->request->variables['exception'];
         return $result;
-	}
+    }
 }
 ?>

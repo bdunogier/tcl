@@ -73,6 +73,8 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 		$req->uri = '/fatal';
 		$req->variables['exception'] = $response;
 
+	    $result->status = new tclMvcResultStatusNotFound();
+
 		return $req;
 	}
 
@@ -109,6 +111,11 @@ class tclMvcConfiguration implements ezcMvcDispatcherConfiguration
 	{
 		if ( $this->contentType !== null )
 			$response->content = new ezcMvcResultContent( '', $this->contentType, 'utf-8' );
+
+        // handle fatal error responses, setting the appropriate request status result
+        if ( $request->uri == '/fatal' )
+	        if ( $request->variables['exception'] instanceof tclScraperNotFoundException )
+	            $response->status = new tclMvcResultStatusNotFound;
 	}
 
 	protected $contentType;

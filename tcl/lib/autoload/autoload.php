@@ -5,6 +5,9 @@ return array(
 	'tclMvcRouter'        => 'router.php',
 	'tclController'       => 'controllers/main.php',
 
+    // MVC: Result status
+    'tclMvcResultStatusNotFound' => 'result_status/notfound.php',
+
 	// MVC: Views
 	'tclJsonView' => 'views/json.php',
 	'tclHtmlView' => 'views/html.php',
@@ -25,8 +28,9 @@ return array(
 	'tclScraperHoraires'     => 'tcl/scrapers/horaires.php',
 
 	// exceptions
-	'tclScraperNetworkException' => 'tcl/exceptions/scraper_network.php',
-	'tclScraperHTTPException'    => 'tcl/exceptions/scraper_http.php',
-	'tclScraperHTMLException'    => 'tcl/exceptions/scraper_html.php',
+	'tclScraperNetworkException'  => 'tcl/exceptions/scraper_network.php',
+	'tclScraperHTTPException'     => 'tcl/exceptions/scraper_http.php',
+	'tclScraperHTMLException'     => 'tcl/exceptions/scraper_html.php',
+	'tclScraperNotFoundException' => 'tcl/exceptions/scraper_not_found.php',
 );
 ?>
