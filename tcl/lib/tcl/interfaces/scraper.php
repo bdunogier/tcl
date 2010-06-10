@@ -1,4 +1,10 @@
 <?php
+/**
+ * Base HTML scraper class
+ * Must be extended by implementing the get() method that returns the scraping result
+ *
+ * @property-read string url The requested URL
+ */
 abstract class tclScraper
 {
     protected $params = array();
@@ -86,6 +92,18 @@ abstract class tclScraper
             throw new tclScraperNetworkException( $errcontext['url'] );
         else
             return false;
+    }
+
+    public function __get( $property )
+    {
+        switch( $property )
+        {
+            case 'url':
+                return $this->requestUrl;
+                break;
+            default:
+                throw new ezcBasePropertyNotFoundException( $property );
+        }
     }
 }
 ?>

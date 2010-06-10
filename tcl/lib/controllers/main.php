@@ -17,12 +17,11 @@ class tclController extends ezcMvcController
         foreach( $horaires as $horaire )
         {
             if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
-            {
                 $res->variables['horaires'][] = $horaire;
-            }
             if ( count( $res->variables['horaires'] ) == 3 )
                 break;
         }
+        $res->variables['tcl-url'] = $scraperHoraires->url;
 
         return $res;
     }
@@ -50,6 +49,7 @@ class tclController extends ezcMvcController
 
         $scrapperLigne = new tclScraperDetailsLigne( $this->ligne );
         $result->variables['ligne'] = $scrapperLigne->get();
+        $result->variables['tcl-url'] = $scrapperLigne->url;
 
         return $result;
     }
@@ -64,6 +64,7 @@ class tclController extends ezcMvcController
 
         $scrapperLignes = new tclScraperLignes();
         $result->variables['lignes'] = $scrapperLignes->get();
+        $result->variables['tcl-url'] = $scrapperLigne->url;
 
         return $result;
     }
