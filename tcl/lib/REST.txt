@@ -1,0 +1,129 @@
+======================
+REST API documentation
+======================
+
+This document aims at describing the REST services this application provides.
+
+Background information
+======================
+RESTful web services, like twitter or amazon S3, obey a set of very strict architectural rules. The requests comply as
+much as possible with the original features of HTTP 1.1, using the existing requests: GET, POST, PUT, DELETE.
+
+More information on RESTful webservices can be found online:
+http://en.wikipedia.org/wiki/Representational_State_Transfer
+
+Responses format
+================
+TCL REST provides responses in two different formats: XML and JSON. JSON is the one we recommend, since it is more
+lightweight than XML, and doesn't require a document description. We don't provide one for the XML responses yet, in any
+case :)
+
+Which format will be returned depends on two criteria:
+* the HTTP Accept-Type header. The first match out of text/xml and application/json will automatically return
+  the matching content type
+* a "content-type suffix" can also be added to the URL in order to force a content-type:
+  /path/to/resource.json => Content-Type = application/json
+  /path/to/resource.xml => Content-Type = text/xml
+
+Error handling
+==============
+Errors are exposed using HTTP error codes. Two type of errors are currently implemented:
+
+404 Not Found
+-------------
+This happens when a specific item is not found by a resource, or when a non-existant resource is requested.
+
+500 Internal Server Error
+-------------------------
+This is the generic error, that more or less means something was wrong.
+
+Available resources
+===================
+
+/lignes
+-------
+Exposes the list of transportation lines.
+
+JSON Response
+~~~~~~~~~~~~~
+
+::
+    {
+      lignes: {
+            C1: {
+                id: "C1"
+                label: "Gare Part Dieu Vivier Merle - Cité Internationale"
+                internalId: "tclC1"
+                direction1: "Gare Part-Dieu Vivier Merle vers Cité Internationale"
+                direction2: "Cité Internationale vers Gare Part-Dieu Vivier Merle"
+                type: "Bus"
+                link: "/lignes/C1"
+                string: "C1|Gare Part Dieu Vivier Merle - Cité Internationale|34|tclC1|Gare Part-Dieu Vivier Merle vers Cité Internationale|Cité Internationale vers Gare Part-Dieu Vivier Merle|1|Bus"
+                arrets: [ ]
+                directions: null
+            }
+            C3: {
+                id: "C3"
+                label: "Saint Paul - Laurent Bonnevay - Vaulx la Grappinière"
+                internalId: "tclC3"
+                direction1: "Gare Saint Paul vers Vaulx-en-Velin La Grappiniere"
+                direction2: "Vaulx-en-Velin La Grappiniere vers Gare Saint Paul"
+                type: "Bus"
+                link: "/lignes/C3"
+                string: "C3|Saint Paul - Laurent Bonnevay - Vaulx la Grappinière|35|tclC3|Gare Saint Paul vers Vaulx-en-Velin La Grappiniere|Vaulx-en-Velin La Grappiniere vers Gare Saint Paul|1|Bus"
+                arrets: [ ]
+                directions: null
+            }
+            [...]
+        }
+    }
+
+/lignes/<idLigne>
+-----------------
+Exposes details about a transportation line. The ID is the one that can be found in a response item from /lignes.
+
+JSON Responses
+~~~~~~~~~~~~~~
+Example for /lignes/A.json ::
+  {
+      ligne: {
+          id: "A"
+          label: "Perrache - Vaulx-en-Velin La Soie"
+          internalId: "tcl301"
+          direction1: "Perrache vers Vaulx-en-Velin La Soie"
+          direction2: "Vaulx-en-Velin La Soie vers Perrache"
+          type: "Métro"
+          link: "/lignes/A"
+          string: "A|Perrache - Vaulx-en-Velin La Soie|26|tcl301|Perrache vers Vaulx-en-Velin La Soie|Vaulx-en-Velin La Soie vers Perrache|4|Métro"
+          arrets: {
+              1492: {
+                  id: "1492"
+                  label: "Ampère Victor Hugo"
+                  internalId: "tcl5000"
+                  quartier: "Lyon 2eme"
+                  string: "1492|tcl5000|Ampère Victor Hugo|Lyon 2eme"
+              }
+              1494: {
+                  [...]
+              }
+          }
+          directions: {
+              fw: {
+                  label: "Perrache vers Vaulx-en-Velin La Soie"
+                  code: "1"
+              }
+              bw: {
+                  label: "Vaulx-en-Velin La Soie vers Perrache"
+                  code: "-1"
+              }
+          }
+      }
+  }
+
+/lignes/<idLigne>/horaires/<idArret>/<idDirection>
+--------------------------------------------------
+Returns all departure times for a given stop and direction.
+
+/lignes/<idLigne>/horaires/<idArret>/<idDirection>/<fromTime>
+-------------------------------------------------------------
+Returns the next 3 departure times for a given stop and direction after a given time.
