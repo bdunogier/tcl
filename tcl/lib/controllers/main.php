@@ -11,16 +11,19 @@ class tclController extends ezcMvcController
         // current time of not specified
         if ( isset( $this->aPartirDe ) )
         {
-            $fromTime = explode( 'h', $this->aPartirDe );
-        }
+            list( $heure ) = explode( ':', $this->aPartirDe );
+            $dayOffset = ( $heure >= 0 && $heure <= 2 ) ? 'tomorrow ' : '';
 
+            // HH:MM => timestamp
+            $fromTimestamp = strtotime( "{$dayOffset}{$this->aPartirDe}" );
+        }
 
         $res->variables['horaires'] = array();
         foreach( $horaires as $horaire )
         {
-            if ( isset( $fromTime ) )
+            if ( isset( $fromTimestamp ) )
             {
-                if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
+                if ( $horaire['unix'] > $fromTimestamp )
                     $res->variables['horaires'][] = $horaire;
                 if ( count( $res->variables['horaires'] ) == 3 )
                     break;
