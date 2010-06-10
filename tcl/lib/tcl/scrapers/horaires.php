@@ -4,12 +4,20 @@ class tclScraperHoraires extends tclScraper
     /**
      * Constructor
      * @param int $idLigne
+     * @param int $idArret
+     * @param string $direction fw|bw
+     * @param int $date The date to fetch departures for, as a UNIX timestamp
      */
-    public function __construct( $idLigne, $idArret, $direction )
+    public function __construct( $idLigne, $idArret, $direction, $date = null )
     {
 		$this->params['page'] = 'horaires';
 		$this->params['etape'] = 3;
-		$this->params['Date'] = implode( '|', array( date('Y'), date('m'), date('d') ) );
+
+        if ( $date === null )
+            $this->params['Date'] = date( 'Y|m|d' );
+        else
+            $this->params['Date'] = date( 'Y|m|d', $date );
+
 		$this->params['submit'] = 'Valider';
 
 		// use tclScraperLignes to get the line string
@@ -24,7 +32,6 @@ class tclScraperHoraires extends tclScraper
 		$this->params['Line'] = $line->string;
 		$this->params['Direction'] = $line->directions[$direction]['code'];
 		$this->params['StopArea'] = $line->arrets[$idArret]->string;
-    	// echo "<pre><b>".__METHOD__.", \$this->params</b>\n"; print_r( $this->params ); echo "</pre>";
     }
 
 	public function get()
@@ -37,7 +44,6 @@ class tclScraperHoraires extends tclScraper
         {
 			$ret[] = explode( 'h', substr( (string)$linkHoraire['title'], -5 ) );
         }
-
         return $ret;
     }
 }

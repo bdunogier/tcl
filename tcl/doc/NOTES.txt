@@ -1,0 +1,40 @@
+Managing 'weird' hours
+======================
+
+Request after the last departure for a  given line, before midnight
+===================================================================
+
+Problem
+-------
+
+No departures will be found for the current date + time.
+
+Solution
+--------
+Fetch the departures for the next day, and look for departures post 0:00
+Add a date information to each departure time
+Indicate on the interface that this departure is for the next day, like <red>tomorrow:</red>
+
+After midnight, with departures after midnight
+==============================================
+
+Problem
+-------
+The fetch date parameter will be the current one, and this means "tomorrow".
+
+Solution
+--------
+* First fetch the departures for the previous day
+* If there are results with time > current_time, return them
+  (evening ones)
+* If there are no results, re-fetch the next day, and consider departures for that day, after the current time
+  (morning ones)
+
+After midnight, with no departures after midnight
+=================================================
+
+Problem
+-------
+* First fetch the departures for the previous day, since the request date is after midnight
+* No departures are found, fetch the next day (the one from the request time)
+* No special indication should be required here, since departure times will be in the morning

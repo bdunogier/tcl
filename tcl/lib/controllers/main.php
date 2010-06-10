@@ -9,17 +9,26 @@ class tclController extends ezcMvcController
         $horaires = $scraperHoraires->get();
 
         // current time of not specified
-        if ( !isset( $this->aPartirDe ) )
-            $this->aPartirDe = date( 'H' ) . 'h' . date( 'i' );
+        if ( isset( $this->aPartirDe ) )
+        {
+            $fromTime = explode( 'h', $this->aPartirDe );
+        }
+
 
         $res->variables['horaires'] = array();
-        $from = explode( 'h', $this->aPartirDe );
         foreach( $horaires as $horaire )
         {
-            if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
+            if ( isset( $fromTime ) )
+            {
+                if ( ( $horaire[0] > $from[0] ) or ( ( $horaire[0] == $from[0] ) && $horaire[1] > $from[1] ) )
+                    $res->variables['horaires'][] = $horaire;
+                if ( count( $res->variables['horaires'] ) == 3 )
+                    break;
+            }
+            else
+            {
                 $res->variables['horaires'][] = $horaire;
-            if ( count( $res->variables['horaires'] ) == 3 )
-                break;
+            }
         }
         $res->variables['tcl-url'] = $scraperHoraires->url;
 

@@ -105,5 +105,11 @@ abstract class tclScraper
                 throw new ezcBasePropertyNotFoundException( $property );
         }
     }
+
+    /**
+     * The main function that executes the scrap and returns the results
+     * @return mixed
+     */
+    abstract public function get();
 }
 ?>
